@@ -2,12 +2,15 @@ Minx.Storage = (function () {
 
     function Storage(opts) {
         opts = opts || {};
+        this.storage = loadStorage(opts.storage || 'LocalStorage');
+    }
 
-        this.storage = opts.storage || 'LocalStorage';
+    function loadStorage(adapter) {
+        if (typeof Minx[adapter] !== 'function') {
+            throw new Error(adapter + ' is not a valid storage adapter.');
+        }
 
-        // Load the storage adapter
-        this.storageEngine = new Minx[this.storage];
-        console.log(this.storageEngine);
+        return new Minx[adapter];
     }
 
     return Storage;
