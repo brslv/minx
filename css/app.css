@@ -61,7 +61,7 @@ body {
     border: 5px solid #ff8c69;
 }
 
-button[type="button"] {
+.NewTaskBtn {
     color: #ccc;
     width: 20%;
     height: 50px;
@@ -73,9 +73,34 @@ button[type="button"] {
     outline: none;
 }
 
-button[type="button"]:hover {
+.NewTaskBtn:hover {
     border-color: #ccc;
     cursor: pointer;
+}
+
+.Nav {
+    text-align: right;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.NavButton {
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 50px;
+    outline: none;
+    color: #ccc;
+    background: #eee;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.NavButton:hover {
+    background: #ff8c69;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid #ff8c69;
 }
 
 .TasksList {
