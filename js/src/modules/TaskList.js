@@ -39,9 +39,7 @@ Minx.TaskList = (function() {
 
     function $addTask(e) {
         var isInput = e.target.nodeName === 'INPUT',
-            target = isInput
-                ? e.target 
-                : obj.coupler.dom.get('.|NewTask')[0],
+            target = isInput ? e.target : obj.newTask,
             content = target.value.trim();
 
         if ( ((e.keyCode === 13 && isInput) || !isInput) && content !== '') {

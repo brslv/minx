@@ -7,6 +7,7 @@ Minx.Task = (function () {
 
     function Task() {
         this.coupler = Minx.Coupler;
+        this.util = this.coupler.util;
     }
 
     Task.prototype._start = function () {
@@ -23,6 +24,8 @@ Minx.Task = (function () {
     };
 
     Task.prototype.html = function (content) {
+        content = this.util.e(content);
+
         var task = this.coupler.dom.create('div', {
             attrs: {
                 class: 'TaskContainer',
