@@ -6,12 +6,18 @@ Minx.Core = (function() {
     }
 
     Core.prototype.run = function () {
+        this.initializeStorage();
+
         this.registerModule(new Minx.Dom());
         this.registerModule(new Minx.Util());
         this.registerModule(new Minx.TaskList());
         this.registerModule(new Minx.Task());
 
         this.startAllModules();
+    };
+
+    Core.prototype.initializeStorage = function () {
+        this.storage = new Minx.Storage('LocalStorage');
     };
 
     Core.prototype.registerModule = function (module) {
