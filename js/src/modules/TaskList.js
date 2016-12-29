@@ -41,14 +41,11 @@ Minx.TaskList = (function() {
         var isInput = e.target.nodeName === 'INPUT',
             target = isInput
                 ? e.target 
-                : obj.coupler.dom.get('.|NewTask')[0];
+                : obj.coupler.dom.get('.|NewTask')[0],
+            content = target.value.trim();
 
-        if ((e.keyCode === 13 && isInput) || !isInput) {
-            if (target.value.trim() === '') {
-                return false;
-            }
-
-            obj.emitTaskSubmission(target.value);
+        if ( ((e.keyCode === 13 && isInput) || !isInput) && content !== '') {
+            obj.emitTaskSubmission(content);
             target.value = '';
         }
     }
