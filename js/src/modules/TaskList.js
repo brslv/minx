@@ -12,6 +12,7 @@ Minx.TaskList = (function() {
         this.tasksList = this.coupler.dom.get('.|TasksList')[0];
         this.newTask = this.coupler.dom.get('.|NewTask')[0];
         this.newTaskBtn = this.coupler.dom.get('.|NewTaskBtn')[0];
+        this.task = this.coupler.dom.get('.|TaskContainer');
 
         // Focus on the input
         this.newTask.focus();
@@ -21,19 +22,20 @@ Minx.TaskList = (function() {
     };
 
     TaskList.prototype.registerEvents = function () {
-        this.newTask.onkeypress = $addTask;
-        this.newTaskBtn.onclick = $addTask;
+        this.newTask.addEventListener('keypress', $addTask);
+        this.newTaskBtn.addEventListener('click', $addTask);
+        this.tasksList.addEventListener('click', $changeTaskState);
     };
 
     TaskList.prototype.subscribeForEvents = function () {
-        this.coupler.subscribe('task-html-created', this.visuallyAdd.bind(obj));
+        this.coupler.subscribe('task-html-created', this.visuallyAddTask.bind(obj));
     };
 
     TaskList.prototype.emitTaskSubmission = function (content) {
         this.coupler.emit('new-task-submitted', content);
     };
 
-    TaskList.prototype.visuallyAdd = function (task) {
+    TaskList.prototype.visuallyAddTask = function (task) {
         this.coupler.dom.append(this.tasksList, task);
     };
 
@@ -45,6 +47,15 @@ Minx.TaskList = (function() {
         if ( ((e.keyCode === 13 && isInput) || !isInput) && content !== '') {
             obj.emitTaskSubmission(content);
             target.value = '';
+        }
+    }
+
+    function $changeTaskState(e) {
+        var target = e.target,
+            isTask = target.nodeName === 'LI';
+
+        if (isTask) {
+            obj.coupler.emit('task-state-changed', target);
         }
     }
 

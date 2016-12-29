@@ -10,8 +10,10 @@ Minx.Coupler = {
     },
 
     emit: function (evt, data) {
-        this.evtHandlers[evt].forEach(function (handler) {
-            handler(data);
-        });
+        if (undefined !== this.evtHandlers[evt]) {
+            this.evtHandlers[evt].forEach(function (handler) {
+                handler(data);
+            });
+        }
     }
 };

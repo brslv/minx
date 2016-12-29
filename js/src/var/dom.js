@@ -19,6 +19,9 @@ Minx.Dom = (function () {
 
     function Dom() {
         this.types = ['#', '.'];
+        this.doc = document;
+        this.body = this.doc.body;
+        this.window = window;
     }
 
     Dom.prototype._start = function () {
@@ -71,6 +74,23 @@ Minx.Dom = (function () {
         }
 
         return parent.appendChild(child);
+    };
+
+    Dom.prototype.hasClass = function (el, cl) {
+        var classes = el.className,
+            regex = new RegExp(cl);
+
+        return classes.match(regex);
+    };
+
+    Dom.prototype.addClass = function (el, cl) {
+        return el.className += ' ' + cl;
+    };
+
+    Dom.prototype.removeClass = function (el, cl) {
+        var regex = new RegExp('(?:^|\\s)' + cl + '(?!\\S)');
+
+        return el.className = el.className.replace(regex , '');
     };
 
     function populateAttributesAndContent(el, opt) {
