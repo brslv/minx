@@ -11,6 +11,7 @@ Minx.TaskList = (function() {
     TaskList.prototype._start = function () {
         this.tasksList = this.coupler.dom.get('.|TasksList')[0];
         this.newTask = this.coupler.dom.get('.|NewTask')[0];
+        this.newTaskBtn = this.coupler.dom.get('.|NewTaskBtn')[0];
 
         // Focus on the input
         this.newTask.focus();
@@ -21,6 +22,7 @@ Minx.TaskList = (function() {
 
     TaskList.prototype.registerEvents = function () {
         this.newTask.onkeypress = $addTask;
+        this.newTaskBtn.onclick = $addTask;
     };
 
     TaskList.prototype.subscribeForEvents = function () {
@@ -36,8 +38,16 @@ Minx.TaskList = (function() {
     };
 
     function $addTask(e) {
-        if (e.keyCode === 13) {
-            target = e.target;
+        var isInput = e.target.nodeName === 'INPUT',
+            target = isInput
+                ? e.target 
+                : obj.coupler.dom.get('.|NewTask')[0];
+
+        if ((e.keyCode === 13 && isInput) || !isInput) {
+            if (target.value.trim() === '') {
+                return false;
+            }
+
             obj.emitTaskSubmission(target.value);
             target.value = '';
         }
