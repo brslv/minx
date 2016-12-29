@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Minx - minimalist tasks</title>
+        <link rel="stylesheet" href="css/app.css" type="text/css">
+    </head>
+    <body>
+        <main>
+            <section class="App Wrapper">
+                <div class="Title">Minx</div>
+                <input type="text" class="NewTask" placeholder="I have to...">
+                <button type="button">Add</button>
+
+                <ul class="TasksList">
+                    <div class="TaskContainer">
+                        <li class="Task __Done">Task</li>
+                    </div>
+
+                    <div class="TaskContainer">
+                        <li class="Task">Task</li>
+                    </div>
+
+                    <div class="TaskContainer">
+                        <li class="Task">Task</li>
+                    </div>
+                </ul>
+            </section>
+        </main>
+
+        <footer class="Footer Wrapper">
+            &copy; Copyright 2017, <a href="javascript:;" title="Borislav Grigorov">Borislav Grigorov</a> &mdash; A minimalist tasks application, built with vanilla JS.
+        </footer>
+
+        <!-- <script src="js/dist/app.js"></script> -->
+
+        <!-- App -->
+        <script src="js/src/app.js"></script>
+
+        <!-- Libs -->
+        <script src="js/src/var/dom.js"></script>
+
+        <!-- Modules -->
+        <script src="js/src/modules/TaskList.js"></script>
+        <script src="js/src/modules/Task.js"></script>
+
+        <!-- Core -->
+        <script src="js/src/core/coupler.js"></script>
+        <script src="js/src/core/core.js"></script>
+    </body>
+</html>
