@@ -1,4 +1,4 @@
-# Minx
+# :heavy_check_mark: Minx
 
 A simple, minimalist, distraction-free tasks application. 
 
