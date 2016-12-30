@@ -2,19 +2,16 @@ Minx.Task = (function () {
 
     var obj;
 
-    /**
-     * Things to do here:
-     *      - Mark a task as done
-     */
-
     function Task() {
-        this.coupler = Minx.Coupler;
-        this.util = this.coupler.util;
         this.obj = this;
         this.el = null;
     }
 
-    Task.prototype._start = function () {
+    Task.prototype._start = function (coupler) {
+        this.coupler = coupler;
+        this.util = this.coupler.util;
+        this.repo = this.coupler.taskRepo;
+
         this.subscribeForEvents({
             'new-task-submitted': this.html.bind(this),
             'task-state-changed': this.changeState.bind(this),
@@ -38,6 +35,9 @@ Minx.Task = (function () {
         });
 
         this.el = task;
+
+        // Save the task to the storage through the repo
+        this.repo.save(content, 0);
         this.coupler.emit('task-html-created', task);
     };
 
@@ -45,10 +45,8 @@ Minx.Task = (function () {
         this.el = task;
 
         if (this.isDone()) {
-            console.log(this.el);
             this.coupler.dom.removeClass(this.el, '__Done');
         } else {
-            console.log(this.el);
             this.coupler.dom.addClass(this.el, '__Done');
         }
     };
@@ -58,7 +56,7 @@ Minx.Task = (function () {
             throw new Error('Invalid DOM element reference.');
         }
 
-        return !!this.coupler.dom.hasClass(this.el, '__Done')
+        return !! this.coupler.dom.hasClass(this.el, '__Done')
     };
 
     return Task;

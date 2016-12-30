@@ -1,8 +1,6 @@
 Minx.Util = (function () {
 
-    function Util() {
-
-    }
+    function Util() { }
 
     Util.prototype._start = function () { };
 

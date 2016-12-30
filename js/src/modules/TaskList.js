@@ -4,11 +4,11 @@ Minx.TaskList = (function() {
 
     function TaskList() {
         obj = this;
-        this.coupler = Minx.Coupler;
         this.tasksList = null;
     }
 
-    TaskList.prototype._start = function () {
+    TaskList.prototype._start = function (coupler) {
+        this.coupler = coupler;
         this.tasksList = this.coupler.dom.get('.|TasksList')[0];
         this.newTask = this.coupler.dom.get('.|NewTask')[0];
         this.newTaskBtn = this.coupler.dom.get('.|NewTaskBtn')[0];

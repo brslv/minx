@@ -1,6 +1,9 @@
 Minx.Core = (function() {
 
+    var obj;
+
     function Core() {
+        obj = this;
         this.modules = [];
         this.coupler = Minx.Coupler;
     }
@@ -12,12 +15,15 @@ Minx.Core = (function() {
         this.registerModule(new Minx.Util());
         this.registerModule(new Minx.TaskList());
         this.registerModule(new Minx.Task());
+        this.registerModule(new Minx.TaskRepo());
 
         this.startAllModules();
     };
 
     Core.prototype.initializeStorage = function () {
-        this.storage = new Minx.Storage('LocalStorage');
+        this.coupler.storage = new Minx.Storage({
+            engine: 'LocalStorage'
+        });
     };
 
     Core.prototype.registerModule = function (module) {
@@ -29,7 +35,7 @@ Minx.Core = (function() {
 
     Core.prototype.startAllModules = function () {
         this.modules.forEach(function (module) {
-            module._start();
+            module._start(obj.coupler);
         });
     };
 
