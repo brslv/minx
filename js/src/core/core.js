@@ -12,6 +12,7 @@ Minx.Core = (function() {
         this.initializeStorage();
 
         this.registerModule(new Minx.Dom());
+        this.registerModule(new Minx.DomFactory());
         this.registerModule(new Minx.Util());
         this.registerModule(new Minx.TaskList());
         this.registerModule(new Minx.Task());

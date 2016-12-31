@@ -30,18 +30,9 @@ Minx.Task = (function () {
     };
 
     Task.prototype.html = function (data) {
-        content = this.util.e(data.task.content);
-
-        var task = this.coupler.dom.create('div', {
-            attrs: {
-                class: 'TaskContainer',
-            },
-            content: '<li class="Task" data-content="' + content + '">' + content + '</li>'
-        });
-
-        this.el = task;
-
-        this.coupler.emit('task-html-created', task);
+        this.el = this.coupler.domFactory.task(
+            this.util.e(data.task.content)
+        );
     };
 
     Task.prototype.changeState = function (task) {
