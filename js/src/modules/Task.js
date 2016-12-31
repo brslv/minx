@@ -12,20 +12,25 @@ Minx.Task = (function () {
         this.util = this.coupler.util;
         this.repo = this.coupler.taskRepo;
 
-        this.subscribeForEvents({
-            'new-task-submitted': this.html.bind(this),
+        this.coupler.batchSubscribe({
+            'new-task-saved': this.html.bind(this),
             'task-state-changed': this.changeState.bind(this),
         });
     };
 
-    Task.prototype.subscribeForEvents = function (evts) {
-        for (evt in evts) {
-            Minx.Coupler.subscribe(evt, evts[evt]);
+    Task.prototype.model = function (data) {
+        if (!data.content) {
+            throw new Error('A task must have a content.');
         }
+
+        return {
+            content: data.content,
+            status: data.status || 0
+        };
     };
 
-    Task.prototype.html = function (content) {
-        content = this.util.e(content);
+    Task.prototype.html = function (data) {
+        content = this.util.e(data.task.content);
 
         var task = this.coupler.dom.create('div', {
             attrs: {
@@ -36,8 +41,6 @@ Minx.Task = (function () {
 
         this.el = task;
 
-        // Save the task to the storage through the repo
-        this.repo.save(content, 0);
         this.coupler.emit('task-html-created', task);
     };
 

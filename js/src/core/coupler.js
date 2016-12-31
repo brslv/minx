@@ -9,6 +9,12 @@ Minx.Coupler = {
         }
     },
 
+    batchSubscribe: function (evts) {
+        for (evt in evts) {
+            this.subscribe(evt, evts[evt]);
+        }
+    },
+
     emit: function (evt, data) {
         if (undefined !== this.evtHandlers[evt]) {
             this.evtHandlers[evt].forEach(function (handler) {

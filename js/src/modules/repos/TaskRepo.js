@@ -5,6 +5,8 @@ Minx.TaskRepo = (function() {
 
     TaskRepo.prototype._start = function (coupler) {
         this.coupler = coupler;
+        this.model = this.coupler.task.model;
+        this.coupler.subscribe('new-task-submitted', this.save.bind(this));
 
         if ( null === (this.tasks = this.coupler.storage.get('tasks')) ) {
             // create a tasks object.
@@ -12,25 +14,32 @@ Minx.TaskRepo = (function() {
             this.tasks = this.coupler.storage.get('tasks');
         }
 
+        // @TODO: extract the parse json to a service object
         this.tasks = JSON.parse(this.tasks);
     };
 
     TaskRepo.prototype.all = function () {
-
+        // @TODO: implement
     };
 
     TaskRepo.prototype.save = function (content, status) {
-        // @TODO: Make the object to be represented by a model.
-        this.tasks.push({
-            content: content,
-            status: status
-        });
+        var saved,
+            task = this.model({
+                content: content,
+                status: status
+            });
 
-        // @TODO:
-        // This should emit an event (entity-added), passing the 
-        // this.tasks object. The Task repo should listen for this event
-        // and perform the operation bellow (save the new tasks object).
-        this.coupler.storage.set('tasks', JSON.stringify(this.tasks));
+        this.tasks.push(task);
+
+        saved = this.coupler.storage.set('tasks', JSON.stringify(this.tasks));
+
+        // Inform the application a new task is added to the storage.
+        this.coupler.emit('new-task-saved', {
+            task: task,
+            tasks: this.tasks
+        }); 
+
+        return saved;
     };
 
     return TaskRepo;

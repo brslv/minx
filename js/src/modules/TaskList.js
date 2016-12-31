@@ -31,10 +31,6 @@ Minx.TaskList = (function() {
         this.coupler.subscribe('task-html-created', this.visuallyAddTask.bind(obj));
     };
 
-    TaskList.prototype.emitTaskSubmission = function (content) {
-        this.coupler.emit('new-task-submitted', content);
-    };
-
     TaskList.prototype.visuallyAddTask = function (task) {
         this.coupler.dom.append(this.tasksList, task);
     };
@@ -45,7 +41,7 @@ Minx.TaskList = (function() {
             content = target.value.trim();
 
         if ( ((e.keyCode === 13 && isInput) || !isInput) && content !== '') {
-            obj.emitTaskSubmission(content);
+            obj.coupler.emit('new-task-submitted', content);
             target.value = '';
         }
     }
