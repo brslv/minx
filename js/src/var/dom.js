@@ -78,7 +78,7 @@ Minx.Dom = (function () {
 
     Dom.prototype.hasClass = function (el, cl) {
         var classes = el.className,
-            regex = new RegExp(cl);
+            regex = new RegExp('\\b' + cl + '\\b');
 
         return classes.match(regex);
     };

@@ -22,11 +22,11 @@ Minx.TaskRepo = (function() {
         // @TODO: implement
     };
 
-    TaskRepo.prototype.save = function (content, status) {
+    TaskRepo.prototype.save = function (content, state) {
         var saved,
             task = this.model({
                 content: content,
-                status: status
+                state: state
             });
 
         this.tasks.push(task);

@@ -14,7 +14,7 @@ Minx.Task = (function () {
 
         this.coupler.batchSubscribe({
             'new-task-saved': this.html.bind(this),
-            'task-state-changed': this.changeState.bind(this),
+            'task-state-change': this.changeState.bind(this),
         });
     };
 
@@ -25,7 +25,7 @@ Minx.Task = (function () {
 
         return {
             content: data.content,
-            status: data.status || 0
+            state: data.state || 0
         };
     };
 
@@ -37,12 +37,16 @@ Minx.Task = (function () {
 
     Task.prototype.changeState = function (task) {
         this.el = task;
+        this.state = 0;
 
         if (this.isDone()) {
+            this.state = 1;
             this.coupler.dom.removeClass(this.el, '__Done');
         } else {
             this.coupler.dom.addClass(this.el, '__Done');
         }
+
+        this.coupler.emit('task-state-changed', this.state);
     };
 
     Task.prototype.isDone = function () {

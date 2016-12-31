@@ -18,17 +18,15 @@ Minx.TaskList = (function() {
         this.newTask.focus();
 
         this.registerEvents();
-        this.subscribeForEvents();
+        this.coupler.batchSubscribe({
+            'task-html-created': this.visuallyAddTask.bind(obj)
+        });
     };
 
     TaskList.prototype.registerEvents = function () {
         this.newTask.addEventListener('keypress', $addTask);
         this.newTaskBtn.addEventListener('click', $addTask);
         this.tasksList.addEventListener('click', $changeTaskState);
-    };
-
-    TaskList.prototype.subscribeForEvents = function () {
-        this.coupler.subscribe('task-html-created', this.visuallyAddTask.bind(obj));
     };
 
     TaskList.prototype.visuallyAddTask = function (task) {
@@ -42,16 +40,16 @@ Minx.TaskList = (function() {
 
         if ( ((e.keyCode === 13 && isInput) || !isInput) && content !== '') {
             obj.coupler.emit('new-task-submitted', content);
-            target.value = '';
+            target.value = ''; // Clean the input
         }
     }
 
     function $changeTaskState(e) {
         var target = e.target,
-            isTask = target.nodeName === 'LI';
+            isTask = obj.coupler.dom.hasClass(target, 'Task');
 
         if (isTask) {
-            obj.coupler.emit('task-state-changed', target);
+            obj.coupler.emit('task-state-change', target);
         }
     }
 
