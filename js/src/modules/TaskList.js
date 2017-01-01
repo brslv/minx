@@ -46,7 +46,7 @@ Minx.TaskList = (function() {
     };
 
     TaskList.prototype.visuallyAddTask = function (task) {
-        this.coupler.dom.append(this.tasksList, task);
+        this.coupler.dom.prepend(this.tasksList, task);
     };
 
     function $addTask(e) {

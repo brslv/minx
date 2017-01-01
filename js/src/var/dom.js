@@ -76,6 +76,12 @@ Minx.Dom = (function () {
         return parent.appendChild(child);
     };
 
+    Dom.prototype.prepend = function (parent, child) {
+        var firstEl = parent.firstChild.nextSibling;
+
+        parent.insertBefore(child, firstEl);
+    };
+
     Dom.prototype.hasClass = function (el, cl) {
         var classes = el.className,
             regex = new RegExp('\\b' + cl + '\\b');
