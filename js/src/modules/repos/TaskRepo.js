@@ -1,7 +1,6 @@
 Minx.TaskRepo = (function() {
 
-    function TaskRepo() {
-    }
+    function TaskRepo() { }
 
     TaskRepo.prototype._start = function (coupler) {
         this.coupler = coupler;

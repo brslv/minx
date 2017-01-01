@@ -79,7 +79,7 @@ Minx.Dom = (function () {
     Dom.prototype.prepend = function (parent, child) {
         var firstEl = parent.firstChild.nextSibling;
 
-        parent.insertBefore(child, firstEl);
+        return parent.insertBefore(child, firstEl);
     };
 
     Dom.prototype.hasClass = function (el, cl) {

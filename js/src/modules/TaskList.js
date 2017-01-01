@@ -27,12 +27,15 @@ Minx.TaskList = (function() {
 
     TaskList.prototype.displayInitialTasks = function () {
         var t,
-            el;
+            el,
+            task,
+            tasks = this.initialTasks.reverse();
 
-        for (t of this.initialTasks.reverse()) {
+        for (t in tasks) {
+            task = tasks[t];
             el = this.coupler.domFactory.task({
-                content: t.content,
-                state: t.state
+                content: task.content,
+                state: task.state
             });
 
             this.tasksList.appendChild(el);

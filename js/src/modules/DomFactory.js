@@ -1,8 +1,6 @@
 Minx.DomFactory = (function () {
         
-    function DomFactory() {
-
-    }
+    function DomFactory() { }
 
     DomFactory.prototype._start = function (coupler) {
         this.coupler = coupler;
