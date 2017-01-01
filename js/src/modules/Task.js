@@ -30,9 +30,9 @@ Minx.Task = (function () {
     };
 
     Task.prototype.html = function (data) {
-        this.el = this.coupler.domFactory.task(
-            this.util.e(data.task.content)
-        );
+        this.el = this.coupler.domFactory.task({
+            content: this.util.e(data.task.content)
+        });
     };
 
     Task.prototype.changeState = function (task) {

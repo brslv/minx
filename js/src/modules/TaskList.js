@@ -12,15 +12,31 @@ Minx.TaskList = (function() {
         this.tasksList = this.coupler.dom.get('.|TasksList')[0];
         this.newTask = this.coupler.dom.get('.|NewTask')[0];
         this.newTaskBtn = this.coupler.dom.get('.|NewTaskBtn')[0];
-        this.task = this.coupler.dom.get('.|TaskContainer');
+        this.taskRepo = this.coupler.taskRepo;
+        this.initialTasks = this.taskRepo.all();
 
         // Focus on the input
         this.newTask.focus();
 
+        this.displayInitialTasks();
         this.registerEvents();
         this.coupler.batchSubscribe({
             'task-html-created': this.visuallyAddTask.bind(obj)
         });
+    };
+
+    TaskList.prototype.displayInitialTasks = function () {
+        var t,
+            el;
+
+        for (t of this.initialTasks.reverse()) {
+            el = this.coupler.domFactory.task({
+                content: t.content,
+                state: t.state
+            });
+
+            this.tasksList.appendChild(el);
+        }
     };
 
     TaskList.prototype.registerEvents = function () {

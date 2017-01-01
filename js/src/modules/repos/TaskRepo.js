@@ -14,12 +14,11 @@ Minx.TaskRepo = (function() {
             this.tasks = this.coupler.storage.get('tasks');
         }
 
-        // @TODO: extract the parse json to a service object
         this.tasks = JSON.parse(this.tasks);
     };
 
     TaskRepo.prototype.all = function () {
-        // @TODO: implement
+        return JSON.parse(this.coupler.storage.get('tasks'));
     };
 
     TaskRepo.prototype.save = function (content, state) {
