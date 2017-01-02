@@ -66,10 +66,15 @@ Minx.TaskList = (function() {
 
     function $changeTaskState(e) {
         var target = e.target,
-            isTask = obj.coupler.dom.hasClass(target, 'Task');
+            isTask = obj.coupler.dom.hasClass(target, 'Task'),
+            data;
 
         if (isTask) {
-            obj.coupler.emit('task-state-change', target);
+            data = {
+                task: target,
+                id: target.dataset.id
+            };
+            obj.coupler.emit('task-state-change', data);
         }
     }
 

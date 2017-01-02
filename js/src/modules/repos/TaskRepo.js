@@ -42,6 +42,13 @@ Minx.TaskRepo = (function() {
         return saved;
     };
 
+    TaskRepo.prototype.update = function (data) {
+        var id = data.id,
+            state = data.state;
+
+        console.log('Should update task with id: ' + id + ' to state: ' + state);
+    };
+
     return TaskRepo;
 
 }());

@@ -7,7 +7,6 @@ Minx.DomFactory = (function () {
     };
 
     DomFactory.prototype.task = function (opts) {
-        console.log(opts);
         var content = opts.content || "&mdash;",
             state = opts.state || 0,
             id = opts.id || 0,

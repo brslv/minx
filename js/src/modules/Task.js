@@ -37,18 +37,27 @@ Minx.Task = (function () {
         });
     };
 
-    Task.prototype.changeState = function (task) {
-        this.el = task;
-        this.state = 0;
+    Task.prototype.changeState = function (data) {
+        this.el = data.task;
+        var elId = data.id,
+            state = 0;
 
         if (this.isDone()) {
-            this.state = 1;
+            state = 1;
             this.coupler.dom.removeClass(this.el, '__Done');
         } else {
             this.coupler.dom.addClass(this.el, '__Done');
         }
 
-        this.coupler.emit('task-state-changed', this.state);
+        this.repo.update({
+            id: elId,
+            state: state
+        });
+
+        this.coupler.emit('task-state-changed', {
+            id: elId,
+            state: state
+        });
     };
 
     Task.prototype.isDone = function () {
