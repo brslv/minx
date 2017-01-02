@@ -82,6 +82,10 @@ Minx.Dom = (function () {
         return parent.insertBefore(child, firstEl);
     };
 
+    Dom.prototype.remove = function (el) {
+        return el.parentNode.removeChild(el);
+    };
+
     Dom.prototype.hasClass = function (el, cl) {
         var classes = el.className,
             regex = new RegExp('\\b' + cl + '\\b');
@@ -97,6 +101,21 @@ Minx.Dom = (function () {
         var regex = new RegExp('(?:^|\\s)' + cl + '(?!\\S)');
 
         return el.className = el.className.replace(regex , '');
+    };
+
+    Dom.prototype.parentWithClass = function (target, cls) {
+        var foundParent = null;
+
+        while(target) {
+            parent = target.parentNode;
+            if (this.hasClass(parent, cls)) {
+                foundParent = parent;
+                break;
+            }
+            target = parent;
+        }
+
+        return foundParent;
     };
 
     function populateAttributesAndContent(el, opt) {

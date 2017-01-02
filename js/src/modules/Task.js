@@ -15,14 +15,11 @@ Minx.Task = (function () {
         this.coupler.batchSubscribe({
             'new-task-saved': this.html.bind(this),
             'task-state-change': this.changeState.bind(this),
+            'task-delete': this.delete.bind(this)
         });
     };
 
     Task.prototype.model = function (data) {
-        if (!data.content) {
-            throw new Error('A task must have a content.');
-        }
-
         return {
             id: data.id || 0,
             content: data.content,
@@ -60,6 +57,10 @@ Minx.Task = (function () {
             id: elId,
             state: state
         });
+    };
+
+    Task.prototype.delete = function (data) {
+        return this.repo.delete(data);
     };
 
     Task.prototype.isDone = function () {

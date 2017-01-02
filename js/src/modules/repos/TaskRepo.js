@@ -46,6 +46,7 @@ Minx.TaskRepo = (function() {
         var id = data.id,
             state = data.state,
             tasks = this.all(),
+            updated,
             task;
 
         tasks.forEach(function (t) {
@@ -55,8 +56,29 @@ Minx.TaskRepo = (function() {
             }
         });
 
-        this.coupler.storage.set('tasks', JSON.stringify(tasks));
+        updated = this.coupler.storage.set('tasks', JSON.stringify(tasks));
         this.coupler.emit('task-updated', task);
+
+        return updated;
+    };
+
+    TaskRepo.prototype.delete = function (data) {
+        var tasks = this.all(),
+            task,
+            deleted;
+
+        tasks = tasks.filter(function (t) {
+            if (t.id !== data.id) {
+                task = t;
+                return t;
+            }
+        });
+
+        // @TODO: Abstract the 'tasks' key.
+        deleted = this.coupler.storage.set('tasks', JSON.stringify(tasks));
+        this.coupler.emit('task-deleted', task);
+
+        return deleted;
     };
 
     return TaskRepo;

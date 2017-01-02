@@ -9,6 +9,7 @@ Minx.TaskList = (function() {
 
     TaskList.prototype._start = function (coupler) {
         this.coupler = coupler;
+        this.taskModel = this.coupler.task.model;
         this.tasksList = this.coupler.dom.get('.|TasksList')[0];
         this.newTask = this.coupler.dom.get('.|NewTask')[0];
         this.newTaskBtn = this.coupler.dom.get('.|NewTaskBtn')[0];
@@ -50,11 +51,19 @@ Minx.TaskList = (function() {
     TaskList.prototype.registerEvents = function () {
         this.newTask.addEventListener('keypress', $addTask);
         this.newTaskBtn.addEventListener('click', $addTask);
+
+        // attach event on each delete button (throught the document object)
+        // and listen for click -> delete task.
+        this.coupler.dom.doc.addEventListener('click', $deleteTask);
         this.tasksList.addEventListener('click', $changeTaskState);
     };
 
     TaskList.prototype.visuallyAddTask = function (task) {
-        this.coupler.dom.prepend(this.tasksList, task);
+        return this.coupler.dom.prepend(this.tasksList, task);
+    };
+
+    TaskList.prototype.visuallyDeleteTask = function (task) {
+        return this.coupler.dom.remove(task);
     };
 
     function $addTask(e) {
@@ -79,6 +88,23 @@ Minx.TaskList = (function() {
                 id: target.dataset.id
             };
             obj.coupler.emit('task-state-change', data);
+        }
+    }
+
+    function $deleteTask(e) {
+        var target = e.target,
+            isDeleteButton = obj.coupler.dom.hasClass(target, 'DeleteButton'),
+            parent,
+            task,
+            taskId,
+            data;
+
+        if (isDeleteButton) {
+            task = obj.coupler.dom.parentWithClass(target, 'Task');
+            taskId = task.dataset.id;
+
+            obj.visuallyDeleteTask(obj.coupler.dom.parentWithClass(task, 'TaskContainer'));
+            obj.coupler.emit('task-delete', obj.taskModel({id: taskId}));
         }
     }
 
