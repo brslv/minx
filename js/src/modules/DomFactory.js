@@ -14,7 +14,7 @@ Minx.DomFactory = (function () {
                 attrs: {
                     class: 'TaskContainer',
                 },
-                content: '<li class="Task' + ((state === 1) ? ' __Done' : '') + '" data-content="' + content + '" data-id="' + id + '">' + content + '</li>'
+                content: '<li class="Task' + ((state === 1) ? ' __Done' : '') + '" data-content="' + content + '" data-id="' + id + '">' + content + '<span class="Right"><button class="ArchiveButton">Archive</button><button class="DeleteButton">Delete</button></span></li>'
             });
 
         this.coupler.emit('task-html-created', html);

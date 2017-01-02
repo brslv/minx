@@ -143,3 +143,26 @@ body {
     color: #aeaeae;
     text-decoration: underline;
 }
+
+/* Utils */
+.Right {
+    float: right;
+}
+
+.ArchiveButton, .DeleteButton {
+    border: 1px solid #eee;
+    border-radius: 50px;
+    background: #eee;
+    padding: 5px;
+    color: #ccc;
+    outline: none;
+}
+
+.ArchiveButton:hover, .DeleteButton:hover {
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.ArchiveButton {
+    margin-right: 5px;
+}
