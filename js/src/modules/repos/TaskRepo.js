@@ -4,6 +4,7 @@ Minx.TaskRepo = (function() {
 
     TaskRepo.prototype._start = function (coupler) {
         this.coupler = coupler;
+        this.rand = Minx.Rand,
         this.model = this.coupler.task.model;
         this.coupler.subscribe('new-task-submitted', this.save.bind(this));
 
@@ -23,6 +24,7 @@ Minx.TaskRepo = (function() {
     TaskRepo.prototype.save = function (content, state) {
         var saved,
             task = this.model({
+                id: this.rand.id(),
                 content: content,
                 state: state
             });

@@ -24,6 +24,7 @@ Minx.Task = (function () {
         }
 
         return {
+            id: data.id || 0,
             content: data.content,
             state: data.state || 0
         };
@@ -31,13 +32,15 @@ Minx.Task = (function () {
 
     Task.prototype.html = function (data) {
         this.el = this.coupler.domFactory.task({
-            content: this.util.e(data.task.content)
+            content: this.util.e(data.task.content),
+            id: data.task.id
         });
     };
 
     Task.prototype.changeState = function (task) {
         this.el = task;
         this.state = 0;
+        this.randId = this.rand.id();
 
         if (this.isDone()) {
             this.state = 1;
