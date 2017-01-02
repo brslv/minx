@@ -1,8 +1,6 @@
 Minx.LocalStorage = (function () {
 
     function LocalStorage() {
-        console.log('LocalStorage adapter loaded...');
-
         this.length = localStorage.length;
     }
 

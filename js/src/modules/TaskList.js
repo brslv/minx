@@ -31,6 +31,10 @@ Minx.TaskList = (function() {
             task,
             tasks = this.initialTasks.reverse();
 
+        this.loadTasks(tasks);
+    };
+
+    TaskList.prototype.loadTasks = function (tasks) {
         for (t in tasks) {
             task = tasks[t];
             el = this.coupler.domFactory.task({
@@ -41,7 +45,7 @@ Minx.TaskList = (function() {
 
             this.tasksList.appendChild(el);
         }
-    };
+    }
 
     TaskList.prototype.registerEvents = function () {
         this.newTask.addEventListener('keypress', $addTask);
