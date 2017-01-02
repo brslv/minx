@@ -44,9 +44,19 @@ Minx.TaskRepo = (function() {
 
     TaskRepo.prototype.update = function (data) {
         var id = data.id,
-            state = data.state;
+            state = data.state,
+            tasks = this.all(),
+            task;
 
-        console.log('Should update task with id: ' + id + ' to state: ' + state);
+        tasks.forEach(function (t) {
+            if (t.id === id) {
+                task = t
+                t.state = t.state === 0 ? 1 : 0;
+            }
+        });
+
+        this.coupler.storage.set('tasks', JSON.stringify(tasks));
+        this.coupler.emit('task-updated', task);
     };
 
     return TaskRepo;

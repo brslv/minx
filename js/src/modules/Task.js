@@ -31,10 +31,12 @@ Minx.Task = (function () {
     };
 
     Task.prototype.html = function (data) {
-        this.el = this.coupler.domFactory.task({
+        var task = this.model({
             content: this.util.e(data.task.content),
             id: data.task.id
         });
+
+        this.el = this.coupler.domFactory.task(task);
     };
 
     Task.prototype.changeState = function (data) {
