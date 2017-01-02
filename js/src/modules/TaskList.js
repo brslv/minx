@@ -34,6 +34,7 @@ Minx.TaskList = (function() {
         for (t in tasks) {
             task = tasks[t];
             el = this.coupler.domFactory.task({
+                id: task.id,
                 content: task.content,
                 state: task.state
             });

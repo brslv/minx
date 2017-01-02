@@ -40,7 +40,6 @@ Minx.Task = (function () {
     Task.prototype.changeState = function (task) {
         this.el = task;
         this.state = 0;
-        this.randId = this.rand.id();
 
         if (this.isDone()) {
             this.state = 1;
