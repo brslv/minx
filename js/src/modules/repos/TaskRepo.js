@@ -13,8 +13,6 @@ Minx.TaskRepo = (function() {
             this.coupler.storage.set('tasks', JSON.stringify([]));
             this.tasks = this.coupler.storage.get('tasks');
         }
-
-        this.tasks = JSON.parse(this.tasks);
     };
 
     TaskRepo.prototype.all = function () {
@@ -23,15 +21,16 @@ Minx.TaskRepo = (function() {
 
     TaskRepo.prototype.save = function (content, state) {
         var saved,
+            tasks = JSON.parse(this.coupler.storage.get('tasks')),
             task = this.model({
                 id: this.rand.id(),
                 content: content,
                 state: state
             });
 
-        this.tasks.push(task);
+        tasks.push(task);
 
-        saved = this.coupler.storage.set('tasks', JSON.stringify(this.tasks));
+        saved = this.coupler.storage.set('tasks', JSON.stringify(tasks));
 
         // Inform the application a new task is added to the storage.
         this.coupler.emit('new-task-saved', {
