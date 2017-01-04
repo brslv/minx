@@ -3,25 +3,26 @@ Minx.TaskRepo = (function() {
     function TaskRepo() { }
 
     TaskRepo.prototype._start = function (coupler) {
+        this.key = 'tasks';
         this.coupler = coupler;
         this.rand = Minx.Rand,
         this.model = this.coupler.task.model;
         this.coupler.subscribe('new-task-submitted', this.save.bind(this));
 
-        if ( null === (this.tasks = this.coupler.storage.get('tasks')) ) {
+        if ( null === (this.tasks = this.coupler.storage.get(this.key)) ) {
             // create a tasks object.
-            this.coupler.storage.set('tasks', JSON.stringify([]));
-            this.tasks = this.coupler.storage.get('tasks');
+            this.coupler.storage.set(this.key, JSON.stringify([]));
+            this.tasks = this.coupler.storage.get(this.key);
         }
     };
 
     TaskRepo.prototype.all = function () {
-        return JSON.parse(this.coupler.storage.get('tasks'));
+        return JSON.parse(this.coupler.storage.get(this.key));
     };
 
     TaskRepo.prototype.save = function (content, state) {
         var saved,
-            tasks = JSON.parse(this.coupler.storage.get('tasks')),
+            tasks = this.all(),
             task = this.model({
                 id: this.rand.id(),
                 content: content,
@@ -30,7 +31,7 @@ Minx.TaskRepo = (function() {
 
         tasks.push(task);
 
-        saved = this.coupler.storage.set('tasks', JSON.stringify(tasks));
+        saved = this.coupler.storage.set(this.key, JSON.stringify(tasks));
 
         // Inform the application a new task is added to the storage.
         this.coupler.emit('new-task-saved', {
@@ -55,7 +56,7 @@ Minx.TaskRepo = (function() {
             }
         });
 
-        updated = this.coupler.storage.set('tasks', JSON.stringify(tasks));
+        updated = this.coupler.storage.set(this.key, JSON.stringify(tasks));
         this.coupler.emit('task-updated', task);
 
         return updated;
@@ -73,8 +74,7 @@ Minx.TaskRepo = (function() {
             }
         });
 
-        // @TODO: Abstract the 'tasks' key.
-        deleted = this.coupler.storage.set('tasks', JSON.stringify(tasks));
+        deleted = this.coupler.storage.set(this.key, JSON.stringify(tasks));
         this.coupler.emit('task-deleted', task);
 
         return deleted;
